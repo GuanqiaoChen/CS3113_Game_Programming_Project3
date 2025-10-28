@@ -149,6 +149,8 @@ void processInput() {
     if (gGameOver) return;
 
     Vector2 a = gState.spaceship->getAcceleration();
+    
+    a.x = 0.0f;
 
     if (IsKeyPressed(KEY_A) && gFuel > 0.0f) { a.x -= AX_INC; gFuel -= 1.0f; }
     if (IsKeyPressed(KEY_D) && gFuel > 0.0f) { a.x += AX_INC; gFuel -= 1.0f; }
