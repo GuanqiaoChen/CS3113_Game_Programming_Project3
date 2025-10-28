@@ -51,12 +51,12 @@ struct MovingPlatform {
 };
 MovingPlatform gPlat;   
 
-float gFuel = 100.0f;
+constexpr float FUEL_MAX = 100.0f;
 float gFuel = FUEL_MAX;   
 
-constexpr int   HUD_PAD     = 24;
-constexpr int   HUD_BAR_W   = 320;
-constexpr int   HUD_BAR_H   = 20;
+constexpr int HUD_PAD   = 16; 
+constexpr int HUD_W     = 180;  
+constexpr int HUD_H     = 6;   
 const float H_THRUST = 320.0f;       
 const float DAMPING  = 0.90f;     
 
@@ -262,25 +262,9 @@ void update() {
 }
 
 static void drawFuelHUD() {
-    Color panel = ColorAlpha(BLACK, 0.15f);
-    DrawRectangle(HUD_PAD - 8, HUD_PAD - 8, HUD_BAR_W + 120, HUD_BAR_H + 28, panel);
-
-    DrawText("FUEL", HUD_PAD, HUD_PAD - 2, 22, DARKGRAY);
-
-    DrawRectangle(HUD_PAD, HUD_PAD + 20, HUD_BAR_W, HUD_BAR_H, DARKGRAY);
-
-    float pct     = (FUEL_MAX > 0.0f) ? (gFuel / FUEL_MAX) : 0.0f;
-    int   fillW   = (int)(pct * HUD_BAR_W);
-
-    Color fillCol = (pct > 0.5f) ? GREEN : (pct > 0.2f ? ORANGE : RED);
-    DrawRectangle(HUD_PAD, HUD_PAD + 20, fillW, HUD_BAR_H, fillCol);
-
-    DrawRectangleLines(HUD_PAD, HUD_PAD + 20, HUD_BAR_W, HUD_BAR_H, BLACK);
-
-    int percent = (int)roundf(pct * 100.0f);
-    const char* txt = TextFormat("%d%%", percent);
-    int tw = MeasureText(txt, 22);
-    DrawText(txt, HUD_PAD + HUD_BAR_W + 12, HUD_PAD + 14, 22, BLACK);
+    float pct = (FUEL_MAX > 0.0f) ? (gFuel / FUEL_MAX) : 0.0f;
+    int percent = (int)(pct * 100.0f + 0.5f);
+    DrawText(TextFormat("Fuel %d%%", percent), HUD_PAD, HUD_PAD + 10, 16, DARKGRAY);
 }
 
 void render() {
